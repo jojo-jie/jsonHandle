@@ -1,0 +1,14 @@
+.vscode/
+.idea/
+.DS_Store
+*.safariextz
+*.safariextension/Update.plist
+*.xcodeproj/xcuserdata/
+*.xcworkspace/xcuserdata/
+xcuserdata/
+DerivedData/
+node_modules/
+venv/
+build/
+dist/
+out/

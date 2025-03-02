@@ -1,0 +1,10 @@
+{
+    "extension_name": {
+        "message": "JSON格式化工具",
+        "description": "扩展的显示名称"
+    },
+    "extension_description": {
+        "message": "自动格式化并美化JSON响应，提供语法高亮和可折叠节点功能。",
+        "description": "扩展功能的描述"
+    }
+} 

@@ -1,10 +1,10 @@
 {
     "extension_name": {
-        "message": "jsonHandle Extension",
+        "message": "JSON Formatter",
         "description": "The display name for the extension."
     },
     "extension_description": {
-        "message": "This is jsonHandle Extension. You should tell us what your extension does here.",
+        "message": "Automatically formats and beautifies JSON responses with syntax highlighting and collapsible nodes.",
         "description": "Description of what the extension does."
     }
 }

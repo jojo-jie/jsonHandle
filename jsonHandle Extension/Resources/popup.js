@@ -14,25 +14,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 const url = tabs[0].url.toLowerCase();
                 // 修改URL显示方式，不再截断，让CSS处理换行
                 debugInfo.textContent = `URL: ${url}`;
-                console.log("当前页面URL:", url);
-                
-                // 检查页面是否已经格式化
-                browser.tabs.sendMessage(tabs[0].id, { action: "checkStatus" })
-                    .then(response => {
-                        console.log("页面状态检查结果:", response);
-                        
-                        if (response) {
-                            debugInfo.textContent += `\n\n状态信息:`;
-                            debugInfo.textContent += `\n• 页面状态: ${response.isFormatted ? '已格式化' : '未格式化'}`;
-                            debugInfo.textContent += `\n• 工具栏: ${response.hasToolbar ? '存在' : '不存在'}`;
-                            debugInfo.textContent += `\n• JSON容器: ${response.hasJsonContainer ? '存在' : '不存在'}`;
-                            debugInfo.textContent += `\n• JSON数据: ${response.hasJSON ? '存在' : '不存在'}`;
-                        }
-                    })
-                    .catch(error => {
-                        console.log("检查状态失败:", error);
-                        debugInfo.textContent += `\n\n状态检查失败: ${error.message}`;
-                    });
             }
         });
     
@@ -62,19 +43,14 @@ document.addEventListener('DOMContentLoaded', function() {
         contentWrapper.prepend(debugCard);
     }
     
-    // 显示消息
-    function showMessage(message) {
-        const messageDiv = document.createElement('div');
-        messageDiv.className = 'status error';
-        messageDiv.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h2v2h-2v-2zm0-8h2v6h-2V7z"/></svg>' + message;
-        
-        // 移除之前的消息
-        const oldMessage = document.querySelector('.message');
-        if (oldMessage) {
-            oldMessage.remove();
-        }
-        
-        // 将消息添加到content-wrapper中
-        contentWrapper.appendChild(messageDiv);
-    }
+    // 优化滚动行为
+    document.addEventListener('wheel', function(e) {
+        // 防止滚动事件冒泡导致的问题
+        e.stopPropagation();
+    }, { passive: true });
+    
+    // 修复iOS上的滚动问题
+    document.body.addEventListener('touchstart', function() {
+        // 触摸开始时的空函数，用于激活iOS上的滚动
+    }, { passive: true });
 });

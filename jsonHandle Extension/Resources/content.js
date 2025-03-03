@@ -382,78 +382,106 @@ function processPage() {
             }
             .search-container {
                 position: fixed;
-                top: 80px;
+                top: 20px;
                 left: 50%;
                 transform: translateX(-50%);
-                background: #2c3e50;
+                background: var(--card-bg, #ffffff);
                 border-radius: 8px;
-                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
                 z-index: 200;
                 display: none;
-                width: 400px;
+                width: 350px;
                 max-width: 90%;
-                animation: fadeIn 0.3s ease;
+                animation: fadeIn 0.2s ease;
+                border: 1px solid rgba(0, 0, 0, 0.1);
+                overflow: hidden;
             }
             .search-container input {
-                padding: 10px 15px;
+                padding: 12px 40px 12px 16px;
                 border: none;
-                border-radius: 4px;
                 width: 100%;
                 font-size: 14px;
-                background: rgba(255, 255, 255, 0.1);
-                color: #ecf0f1;
-                transition: all 0.3s ease;
+                background: transparent;
+                color: var(--text-color, #333);
+                transition: all 0.2s ease;
             }
             .search-container input:focus {
                 outline: none;
-                background: rgba(255, 255, 255, 0.15);
-                box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.5);
             }
             .search-container input::placeholder {
-                color: rgba(236, 240, 241, 0.6);
+                color: rgba(0, 0, 0, 0.4);
             }
-            .search-container .search-icon {
-                position: absolute;
-                left: 30px;
-                top: 50%;
-                transform: translateY(-50%);
-                width: 16px;
-                height: 16px;
-                fill: rgba(236, 240, 241, 0.6);
-                pointer-events: none;
+            .search-container .search-controls {
+                display: flex;
+                align-items: center;
+                padding: 8px 12px;
+                border-top: 1px solid rgba(0, 0, 0, 0.05);
+                background: rgba(0, 0, 0, 0.02);
             }
             .search-container .search-info {
-                margin-top: 10px;
                 font-size: 12px;
-                color: rgba(236, 240, 241, 0.7);
-                text-align: center;
+                color: rgba(0, 0, 0, 0.6);
+                flex: 1;
+            }
+            .search-container .search-nav {
+                display: flex;
+                gap: 8px;
+            }
+            .search-container .search-nav-btn {
+                background: transparent;
+                border: none;
+                cursor: pointer;
+                padding: 4px;
+                border-radius: 4px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: var(--primary-color, #4285f4);
+            }
+            .search-container .search-nav-btn:hover {
+                background: rgba(0, 0, 0, 0.05);
+            }
+            .search-container .search-nav-btn svg {
+                width: 16px;
+                height: 16px;
+                fill: currentColor;
             }
             .search-container .search-close {
                 position: absolute;
-                top: 10px;
-                right: 10px;
+                top: 12px;
+                right: 12px;
                 background: transparent;
                 border: none;
-                color: rgba(236, 240, 241, 0.7);
                 cursor: pointer;
                 padding: 0;
-                font-size: 18px;
-                line-height: 1;
-                transition: all 0.2s ease;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 20px;
+                height: 20px;
+                opacity: 0.5;
+                transition: opacity 0.2s;
             }
             .search-container .search-close:hover {
-                color: #ecf0f1;
-                transform: scale(1.1);
+                opacity: 0.8;
+            }
+            .search-container .search-close svg {
+                width: 16px;
+                height: 16px;
+                fill: currentColor;
             }
             @keyframes fadeIn {
-                from { opacity: 0; transform: translate(-50%, -10px); }
-                to { opacity: 1; transform: translate(-50%, 0); }
+                from { opacity: 0; transform: translateY(-10px) translateX(-50%); }
+                to { opacity: 1; transform: translateY(0) translateX(-50%); }
             }
             .search-result {
-                background-color: #ffeaa7 !important;
+                background-color: rgba(66, 133, 244, 0.2) !important;
+                border-radius: 2px;
+                box-shadow: 0 0 0 1px rgba(66, 133, 244, 0.3);
             }
             .search-active {
-                background-color: #fdcb6e !important;
+                background-color: rgba(66, 133, 244, 0.4) !important;
+                box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.5);
             }
             .copy-tooltip {
                 position: fixed;
@@ -559,21 +587,38 @@ function processPage() {
                     fill: #8ab4f8;
                 }
                 .search-container {
-                    background: #292a2d;
+                    background: var(--card-bg-dark, #292a2d);
+                    border-color: rgba(255, 255, 255, 0.1);
                 }
                 .search-container input {
-                    background: #202124;
-                    color: #e8eaed;
-                    border: 1px solid #5f6368;
+                    color: var(--text-dark, #e8eaed);
+                }
+                .search-container input::placeholder {
+                    color: rgba(255, 255, 255, 0.4);
+                }
+                .search-container .search-controls {
+                    border-top-color: rgba(255, 255, 255, 0.05);
+                    background: rgba(0, 0, 0, 0.2);
+                }
+                .search-container .search-info {
+                    color: rgba(255, 255, 255, 0.6);
+                }
+                .search-container .search-nav-btn {
+                    color: var(--primary-dark, #8ab4f8);
+                }
+                .search-container .search-nav-btn:hover {
+                    background: rgba(255, 255, 255, 0.05);
+                }
+                .search-container .search-close svg {
+                    fill: rgba(255, 255, 255, 0.7);
                 }
                 .search-result {
-                    background-color: #665c32 !important;
+                    background-color: rgba(138, 180, 248, 0.2) !important;
+                    box-shadow: 0 0 0 1px rgba(138, 180, 248, 0.3);
                 }
                 .search-active {
-                    background-color: #8c7736 !important;
-                }
-                .collapsible:hover {
-                    color: #8ab4f8;
+                    background-color: rgba(138, 180, 248, 0.4) !important;
+                    box-shadow: 0 0 0 2px rgba(138, 180, 248, 0.5);
                 }
             }
         `;
@@ -612,7 +657,21 @@ function processPage() {
             const searchContainer = document.querySelector('.search-container');
             if (searchContainer.style.display === 'none' || !searchContainer.style.display) {
                 searchContainer.style.display = 'block';
-                document.querySelector('.search-input').focus();
+                const searchInput = document.querySelector('.search-input');
+                searchInput.value = ''; // 清空搜索框
+                searchInput.focus();
+                
+                // 重置搜索信息
+                const searchInfo = document.querySelector('.search-info');
+                if (searchInfo) {
+                    searchInfo.textContent = '输入关键词并按回车搜索';
+                }
+                
+                // 隐藏导航按钮
+                const navButtons = document.querySelectorAll('.search-nav-btn');
+                navButtons.forEach(btn => {
+                    btn.style.display = 'none';
+                });
             } else {
                 searchContainer.style.display = 'none';
                 clearSearch();
@@ -1286,12 +1345,11 @@ function createPathInfo() {
 function createSearchContainer() {
     const searchContainer = document.createElement('div');
     searchContainer.className = 'search-container';
-
     
     // 搜索输入框
     const searchInput = document.createElement('input');
     searchInput.className = 'search-input';
-    searchInput.placeholder = '输入关键词搜索 JSON 内容...';
+    searchInput.placeholder = '搜索...';
     searchInput.addEventListener('keyup', function(e) {
         if (e.key === 'Enter') {
             searchJSON(this.value);
@@ -1302,8 +1360,56 @@ function createSearchContainer() {
         }
     });
     
+    // 关闭按钮
+    const closeButton = document.createElement('button');
+    closeButton.className = 'search-close';
+    closeButton.innerHTML = '<svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>';
+    closeButton.addEventListener('click', function() {
+        searchContainer.style.display = 'none';
+        clearSearch();
+    });
+    
+    // 搜索控制区域
+    const searchControls = document.createElement('div');
+    searchControls.className = 'search-controls';
+    
+    // 搜索信息
+    const searchInfo = document.createElement('div');
+    searchInfo.className = 'search-info';
+    searchInfo.textContent = '输入关键词并按回车搜索';
+    
+    // 导航按钮区域
+    const searchNav = document.createElement('div');
+    searchNav.className = 'search-nav';
+    
+    // 上一个结果按钮
+    const prevButton = document.createElement('button');
+    prevButton.className = 'search-nav-btn prev-btn';
+    prevButton.innerHTML = '<svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12l4.58-4.59z"/></svg>';
+    prevButton.title = '上一个结果 (Shift+F3)';
+    prevButton.addEventListener('click', function() {
+        navigateSearchResults({ key: 'F3', shiftKey: true, preventDefault: () => {} });
+    });
+    
+    // 下一个结果按钮
+    const nextButton = document.createElement('button');
+    nextButton.className = 'search-nav-btn next-btn';
+    nextButton.innerHTML = '<svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6-6-6z"/></svg>';
+    nextButton.title = '下一个结果 (F3)';
+    nextButton.addEventListener('click', function() {
+        navigateSearchResults({ key: 'F3', shiftKey: false, preventDefault: () => {} });
+    });
+    
     // 添加元素到容器
+    searchNav.appendChild(prevButton);
+    searchNav.appendChild(nextButton);
+    
+    searchControls.appendChild(searchInfo);
+    searchControls.appendChild(searchNav);
+    
     searchContainer.appendChild(searchInput);
+    searchContainer.appendChild(closeButton);
+    searchContainer.appendChild(searchControls);
     
     return searchContainer;
 }
@@ -1345,11 +1451,17 @@ function searchJSON(query) {
     const searchInfo = document.querySelector('.search-info');
     if (searchInfo) {
         if (searchResults.length > 0) {
-            searchInfo.innerHTML = `找到 ${searchResults.length} 个结果 | F3 或 Ctrl+N (下一个) | Shift+Ctrl+N (上一个)`;
+            searchInfo.textContent = `找到 ${searchResults.length} 个结果`;
         } else {
-            searchInfo.innerHTML = '未找到匹配结果';
+            searchInfo.textContent = '未找到匹配结果';
         }
     }
+    
+    // 显示/隐藏导航按钮
+    const navButtons = document.querySelectorAll('.search-nav-btn');
+    navButtons.forEach(btn => {
+        btn.style.display = searchResults.length > 0 ? 'flex' : 'none';
+    });
     
     if (searchResults.length > 0) {
         searchResults[0].classList.add('search-active');

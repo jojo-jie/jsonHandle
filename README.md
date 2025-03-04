@@ -9,17 +9,9 @@
 - 提供语法高亮，便于阅读
 - 支持 JSON 数据的复制和下载
 
-## 安装方法
-
-### 从 App Store 安装
-
-1. 访问 [Mac App Store](https://apps.apple.com/) 搜索 "jsonHandle"
-2. 点击"获取"并完成安装
-3. 在 Safari 浏览器中启用该扩展：Safari > 设置 > 扩展 > 勾选 jsonHandle
-
 ### 手动安装
 
-1. 克隆此仓库：`git clone https://github.com/yourusername/jsonHandle.git`
+1. 克隆此仓库：`git clone https://github.com/jojo-jie/jsonHandle.git`
 2. 使用 Xcode 打开项目
 3. 构建并运行项目
 4. 在 Safari 浏览器中启用该扩展
@@ -40,7 +32,7 @@
 
 ### 构建步骤
 
-1. 克隆仓库：`git clone https://github.com/yourusername/jsonHandle.git`
+1. 克隆仓库：`git clone https://github.com/jojo-jie/jsonHandle.git`
 2. 进入项目目录：`cd jsonHandle`
 3. 使用 Xcode 打开项目
 4. 选择目标设备并点击运行

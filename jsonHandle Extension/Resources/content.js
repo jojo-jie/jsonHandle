@@ -621,6 +621,277 @@ function processPage() {
                     box-shadow: 0 0 0 2px rgba(138, 180, 248, 0.5);
                 }
             }
+
+            /* 节点信息弹窗样式 */
+            .node-info-popup {
+                position: fixed;
+                background-color: #ffffff;
+                border: 1px solid rgba(0, 0, 0, 0.1);
+                border-radius: 8px;
+                padding: 20px;
+                box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+                z-index: 1000;
+                cursor: default;
+                min-width: 480px;
+                max-width: min(1000px, 90vw);
+                width: auto;
+            }
+
+            .node-info-popup.popup-above {
+                animation: fadeInScaleFromBottom 0.2s ease;
+            }
+
+            .node-info-popup.popup-below {
+                animation: fadeInScaleFromTop 0.2s ease;
+            }
+
+            @keyframes fadeInScaleFromBottom {
+                from {
+                    opacity: 0;
+                    transform: scale(0.95) translateY(10px);
+                }
+                to {
+                    opacity: 1;
+                    transform: scale(1) translateY(0);
+                }
+            }
+
+            @keyframes fadeInScaleFromTop {
+                from {
+                    opacity: 0;
+                    transform: scale(0.95) translateY(-10px);
+                }
+                to {
+                    opacity: 1;
+                    transform: scale(1) translateY(0);
+                }
+            }
+
+            .node-info-popup .info-header {
+                font-size: 14px;
+                font-weight: 500;
+                color: var(--text-color, #333);
+                margin-bottom: 12px;
+                padding-bottom: 8px;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .node-info-popup .info-close {
+                background: transparent;
+                border: none;
+                cursor: pointer;
+                padding: 4px;
+                opacity: 0.6;
+                transition: opacity 0.2s;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .node-info-popup .info-close:hover {
+                opacity: 1;
+            }
+
+            .node-info-popup .info-close svg {
+                width: 16px;
+                height: 16px;
+                fill: currentColor;
+            }
+
+            .node-info-popup .info-content {
+                font-size: 13px;
+                line-height: 1.6;
+            }
+
+            .node-info-popup .info-row {
+                margin-bottom: 8px;
+                display: flex;
+                flex-direction: column;
+                gap: 4px;
+            }
+
+            .node-info-popup .info-row-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .node-info-popup .info-label {
+                color: var(--text-color, #666);
+                font-weight: 500;
+            }
+
+            .node-info-popup .info-value,
+            .node-info-popup .formatted-json-text {
+                background-color: var(--info-value-bg);
+                border: 1px solid var(--info-value-border);
+                border-radius: 4px;
+                padding: 12px;
+                margin-top: 8px;
+                max-height: 400px;
+                min-width: 360px;
+                overflow: auto;
+                white-space: pre;
+                font-family: monospace;
+                font-size: 13px;
+                line-height: 1.5;
+            }
+
+            .node-info-popup .copy-btn {
+                background: transparent;
+                border: none;
+                cursor: pointer;
+                padding: 4px 8px;
+                font-size: 12px;
+                color: var(--primary-color, #4285f4);
+                display: flex;
+                align-items: center;
+                gap: 4px;
+                border-radius: 4px;
+                transition: all 0.2s ease;
+                position: relative;
+            }
+
+            .node-info-popup .copy-btn:hover {
+                background: rgba(66, 133, 244, 0.1);
+            }
+
+            .node-info-popup .copy-btn.copied {
+                background: #4caf50;
+                color: white;
+            }
+
+            .node-info-popup .copy-btn .copy-feedback {
+                position: absolute;
+                bottom: 100%;
+                left: 50%;
+                transform: translateX(-50%) translateY(-8px);
+                background: rgba(0, 0, 0, 0.8);
+                color: white;
+                padding: 4px 8px;
+                border-radius: 4px;
+                font-size: 12px;
+                white-space: nowrap;
+                pointer-events: none;
+                opacity: 0;
+                transition: all 0.2s ease;
+            }
+
+            .node-info-popup .copy-btn .copy-feedback.show {
+                opacity: 1;
+                transform: translateX(-50%) translateY(-4px);
+            }
+
+            .node-info-popup .copy-btn .copy-feedback:after {
+                content: '';
+                position: absolute;
+                top: 100%;
+                left: 50%;
+                margin-left: -4px;
+                border-width: 4px;
+                border-style: solid;
+                border-color: rgba(0, 0, 0, 0.8) transparent transparent transparent;
+            }
+
+            @media (prefers-color-scheme: dark) {
+                .node-info-popup {
+                    background: var(--card-bg-dark, #2c2c2c);
+                    border-color: rgba(255, 255, 255, 0.1);
+                    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+                }
+
+                .node-info-popup .info-header {
+                    color: var(--text-dark, #e8eaed);
+                    border-bottom-color: rgba(255, 255, 255, 0.1);
+                }
+
+                .node-info-popup .info-close {
+                    color: rgba(255, 255, 255, 0.7);
+                }
+
+                .node-info-popup .info-close:hover {
+                    color: rgba(255, 255, 255, 0.9);
+                    background: rgba(255, 255, 255, 0.1);
+                }
+
+                .node-info-popup .info-label {
+                    color: var(--text-dark, #9aa0a6);
+                }
+
+                .node-info-popup .info-value {
+                    background: rgba(255, 255, 255, 0.05);
+                    color: var(--text-dark, #e8eaed);
+                    border: 1px solid rgba(255, 255, 255, 0.1);
+                }
+
+                .node-info-popup .copy-btn {
+                    color: var(--primary-dark, #8ab4f8);
+                    background: rgba(255, 255, 255, 0.05);
+                }
+
+                .node-info-popup .copy-btn:hover {
+                    background: rgba(138, 180, 248, 0.15);
+                }
+
+                .node-info-popup .copy-btn.copied {
+                    background: #43a047;
+                    color: #ffffff;
+                }
+
+                .node-info-popup .copy-btn svg {
+                    fill: currentColor;
+                }
+
+                .node-info-popup .copy-feedback {
+                    background: rgba(0, 0, 0, 0.8);
+                    color: #ffffff;
+                }
+
+                .node-info-popup::-webkit-scrollbar {
+                    width: 8px;
+                }
+
+                .node-info-popup::-webkit-scrollbar-track {
+                    background: rgba(255, 255, 255, 0.05);
+                    border-radius: 4px;
+                }
+
+                .node-info-popup::-webkit-scrollbar-thumb {
+                    background: rgba(255, 255, 255, 0.2);
+                    border-radius: 4px;
+                }
+
+                .node-info-popup::-webkit-scrollbar-thumb:hover {
+                    background: rgba(255, 255, 255, 0.3);
+                }
+            }
+
+            .node-info-popup .info-value {
+                background-color: var(--info-value-bg);
+                border: 1px solid var(--info-value-border);
+                border-radius: 4px;
+                padding: 8px;
+                margin-top: 4px;
+                max-height: 200px;
+                overflow: auto;
+                white-space: pre;
+                font-family: monospace;
+            }
+
+            .node-info-popup .formatted-json-text {
+                background-color: var(--info-value-bg);
+                border: 1px solid var(--info-value-border);
+                border-radius: 4px;
+                padding: 8px;
+                margin-top: 4px;
+                max-height: 200px;
+                overflow: auto;
+                white-space: pre;
+                font-family: monospace;
+            }
         `;
         document.head.appendChild(style);
         
@@ -717,6 +988,7 @@ function processPage() {
                     // 添加功能按钮到路径信息栏
                     toolbarRight.appendChild(searchBtn);
                     toolbarRight.appendChild(toggleViewBtn);
+                    toolbarRight.appendChild(editBtn);
                     toolbarRight.appendChild(copyBtn);
                 }
             }
@@ -740,6 +1012,15 @@ function processPage() {
                 });
         };
         
+        // 编辑按钮
+        const editBtn = document.createElement('button');
+        editBtn.className = 'toolbar-btn';
+        editBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>编辑';
+        editBtn.onclick = function() {
+            // 这里不需要实现功能，只是UI展示
+            console.log('编辑按钮被点击');
+        };
+        
         // 添加功能按钮到路径信息栏
         const pathInfo = document.querySelector('.path-info');
         if (pathInfo) {
@@ -747,6 +1028,7 @@ function processPage() {
             if (toolbarRight) {
                 toolbarRight.appendChild(searchBtn);
                 toolbarRight.appendChild(toggleViewBtn);
+                toolbarRight.appendChild(editBtn);
                 toolbarRight.appendChild(copyBtn);
             }
         }
@@ -791,58 +1073,425 @@ function processPage() {
                 
                 row.addEventListener('click', function(e) {
                     e.stopPropagation();
+                    
+                    // 移除已存在的弹窗
+                    const existingPopup = document.querySelector('.node-info-popup');
+                    if (existingPopup) {
+                        existingPopup.remove();
+                    }
+
+                    // 创建弹窗
+                    const popup = document.createElement('div');
+                    popup.className = 'node-info-popup';
+
+                    // 阻止滚动传播
+                    popup.addEventListener('wheel', (e) => {
+                        const scrollContent = e.target.closest('.info-value, .formatted-json-text');
+                        if (!scrollContent) {
+                            e.preventDefault();
+                            return;
+                        }
+
+                        const delta = e.deltaY;
+                        const scrollTop = scrollContent.scrollTop;
+                        const maxScroll = scrollContent.scrollHeight - scrollContent.clientHeight;
+
+                        // 如果内容不需要滚动，阻止事件
+                        if (scrollContent.scrollHeight <= scrollContent.clientHeight) {
+                            e.preventDefault();
+                            return;
+                        }
+
+                        // 在到达边界时阻止滚动
+                        if ((scrollTop <= 0 && delta < 0) || (scrollTop >= maxScroll && delta > 0)) {
+                            e.preventDefault();
+                        }
+                    }, { passive: false });
+
+                    // 添加样式
+                    const style = document.createElement('style');
+                    style.textContent = `
+                        .node-info-popup {
+                            cursor: default;
+                        }
+                        .node-info-popup .info-header {
+                            cursor: move;
+                            user-select: none;
+                        }
+                        .node-info-popup .info-close {
+                            cursor: pointer;
+                            user-select: none;
+                        }
+                        .node-info-popup .info-content {
+                            cursor: default;
+                        }
+                        .node-info-popup .info-label {
+                            user-select: none;
+                        }
+                        .node-info-popup .info-value {
+                            cursor: text;
+                            user-select: text;
+                            -webkit-user-select: text;
+                            -moz-user-select: text;
+                            -ms-user-select: text;
+                        }
+                        .node-info-popup .copy-btn {
+                            cursor: pointer;
+                            user-select: none;
+                        }
+                        .node-info-popup.dragging {
+                            cursor: move !important;
+                        }
+                        .node-info-popup.dragging * {
+                            cursor: move !important;
+                            user-select: none !important;
+                        }
+                        .node-info-popup .preview-json {
+                            cursor: default;
+                        }
+                        .node-info-popup .preview-json .collapsible {
+                            cursor: pointer;
+                            user-select: none;
+                        }
+                        .node-info-popup .preview-json .json-row {
+                            cursor: default;
+                        }
+                        .node-info-popup .preview-json .json-string,
+                        .node-info-popup .preview-json .json-number,
+                        .node-info-popup .preview-json .json-boolean,
+                        .node-info-popup .preview-json .json-null {
+                            cursor: text;
+                            user-select: text;
+                            -webkit-user-select: text;
+                            -moz-user-select: text;
+                            -ms-user-select: text;
+                        }
+                        .node-info-popup .info-value {
+                            padding: 8px 12px;
+                            background: var(--card-bg, rgba(0, 0, 0, 0.02));
+                            border-radius: 4px;
+                            line-height: 1.5;
+                            white-space: pre-wrap;
+                            word-break: break-all;
+                            font-family: monospace;
+                        }
+                        @media (prefers-color-scheme: dark) {
+                            .node-info-popup .info-value {
+                                background: var(--card-bg-dark, rgba(255, 255, 255, 0.05));
+                            }
+                        }
+                    `;
+                    document.head.appendChild(style);
+
+                    // 添加拖拽功能
+                    let isDragging = false;
+                    let currentX;
+                    let currentY;
+                    let initialX;
+                    let initialY;
+                    let xOffset = 0;
+                    let yOffset = 0;
+
+                    function dragStart(e) {
+                        // 如果点击的是文本区域或其子元素，允许文本选择
+                        if (e.target.closest('.info-value') || 
+                            e.target.closest('.json-string') ||
+                            e.target.closest('.json-number') ||
+                            e.target.closest('.json-boolean') ||
+                            e.target.closest('.json-null')) {
+                            return;
+                        }
+
+                        // 如果是可点击的元素，不启动拖拽
+                        if (e.target.closest('.info-close') || 
+                            e.target.closest('.copy-btn') || 
+                            e.target.closest('.collapsible')) {
+                            return;
+                        }
+
+                        // 只允许从标题栏或弹窗空白区域拖动
+                        if (e.target.closest('.info-header') || e.target === popup) {
+                            e.preventDefault();
+                            initialX = e.clientX - xOffset;
+                            initialY = e.clientY - yOffset;
+                            isDragging = true;
+                            popup.classList.add('dragging');
+                        }
+                    }
+
+                    function dragEnd() {
+                        if (!isDragging) return;
+                        initialX = currentX;
+                        initialY = currentY;
+                        isDragging = false;
+                        popup.classList.remove('dragging');
+                    }
+
+                    function drag(e) {
+                        if (isDragging) {
+                            e.preventDefault();
+                            currentX = e.clientX - initialX;
+                            currentY = e.clientY - initialY;
+                            xOffset = currentX;
+                            yOffset = currentY;
+                            popup.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
+                        }
+                    }
+
+                    popup.addEventListener('mousedown', dragStart, { passive: false });
+                    document.addEventListener('mousemove', drag, { passive: false });
+                    document.addEventListener('mouseup', dragEnd);
+
+                    // 先添加到文档中以获取实际高度
+                    popup.style.visibility = 'hidden';
+                    document.body.appendChild(popup);
+
+                    // 创建弹窗内容
+                    const header = document.createElement('div');
+                    header.className = 'info-header';
+                    header.textContent = '节点信息';
+
+                    // 关闭按钮
+                    const closeBtn = document.createElement('button');
+                    closeBtn.className = 'info-close';
+                    closeBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>';
+                    closeBtn.onclick = () => popup.remove();
+                    header.appendChild(closeBtn);
+
+                    const content = document.createElement('div');
+                    content.className = 'info-content';
+
+                    // 创建复制按钮函数
+                    function createCopyButton(text, label) {
+                        const button = document.createElement('button');
+                        button.className = 'copy-btn';
+                        button.innerHTML = `
+                            <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+                            复制${label}
+                            <span class="copy-feedback">已复制${label}</span>
+                        `;
+                        
+                        button.addEventListener('click', async (e) => {
+                            e.stopPropagation();
+                            try {
+                                await navigator.clipboard.writeText(text);
+                                
+                                // 添加复制成功的视觉反馈
+                                button.classList.add('copied');
+                                const feedback = button.querySelector('.copy-feedback');
+                                feedback.classList.add('show');
+                                
+                                // 2秒后恢复按钮状态
+                        setTimeout(() => {
+                                    button.classList.remove('copied');
+                                    feedback.classList.remove('show');
+                                }, 2000);
+                            } catch (err) {
+                                console.error('复制失败:', err);
+                                // 显示错误提示
+                                const feedback = button.querySelector('.copy-feedback');
+                                feedback.textContent = '复制失败';
+                                feedback.classList.add('show');
+                                
+                                setTimeout(() => {
+                                    feedback.classList.remove('show');
+                                    feedback.textContent = `已复制${label}`;
+                                }, 2000);
+                            }
+                        });
+                        
+                        return button;
+                    }
+
+                    // 路径信息
+                    const pathRow = document.createElement('div');
+                    pathRow.className = 'info-row';
+                    const pathHeader = document.createElement('div');
+                    pathHeader.className = 'info-row-header';
+                    const pathLabel = document.createElement('span');
+                    pathLabel.className = 'info-label';
+                    pathLabel.textContent = '路径';
+                    pathHeader.appendChild(pathLabel);
+                    pathHeader.appendChild(createCopyButton(currentPath || '根节点', '路径'));
+                    pathRow.appendChild(pathHeader);
+                    const pathValue = document.createElement('div');
+                    pathValue.className = 'info-value';
+                    pathValue.textContent = currentPath || '根节点';
+                    pathRow.appendChild(pathValue);
+
+                    // 键信息
+                    if (!isArray) {
+                        const keyRow = document.createElement('div');
+                        keyRow.className = 'info-row';
+                        const keyHeader = document.createElement('div');
+                        keyHeader.className = 'info-row-header';
+                        const keyLabel = document.createElement('span');
+                        keyLabel.className = 'info-label';
+                        keyLabel.textContent = '键';
+                        keyHeader.appendChild(keyLabel);
+                        keyHeader.appendChild(createCopyButton(key, '键'));
+                        keyRow.appendChild(keyHeader);
+                        const keyValue = document.createElement('div');
+                        keyValue.className = 'info-value';
+                        keyValue.textContent = key;
+                        keyRow.appendChild(keyValue);
+                        content.appendChild(keyRow);
+                    }
+
+                    // 值信息
+                    const valueRow = document.createElement('div');
+                    valueRow.className = 'info-row';
+                    const valueHeader = document.createElement('div');
+                    valueHeader.className = 'info-row-header';
+                    const valueLabel = document.createElement('span');
+                    valueLabel.className = 'info-label';
+                    valueLabel.textContent = '值';
+                    valueHeader.appendChild(valueLabel);
+
+                    // 获取格式化的值
+                    let valueStr;
+                    let isJsonValue = false;
+                    let parsedJson;
+
+                    if (typeof value === 'string') {
+                        try {
+                            parsedJson = JSON.parse(value);
+                            if (typeof parsedJson === 'object' && parsedJson !== null) {
+                                isJsonValue = true;
+                                valueStr = JSON.stringify(parsedJson, null, 2);
+                    } else {
+                                valueStr = value;
+                            }
+                        } catch (e) {
+                            valueStr = value;
+                        }
+                    } else if (typeof value === 'object' && value !== null) {
+                        isJsonValue = true;
+                        parsedJson = value;
+                        valueStr = JSON.stringify(value, null, 2);
+                    } else {
+                        valueStr = String(value);
+                    }
+
+                    valueHeader.appendChild(createCopyButton(valueStr, '值'));
+                    valueRow.appendChild(valueHeader);
+                    const valueContent = document.createElement('div');
+                    valueContent.className = 'info-value';
+
+                    if (isJsonValue) {
+                        // 创建简单的格式化文本显示
+                        const formattedContainer = document.createElement('div');
+                        formattedContainer.className = 'formatted-json-text';
+                        
+                        // 格式化 JSON 文本
+                        const formattedText = JSON.stringify(parsedJson, null, 4);
+                        formattedContainer.textContent = formattedText;
+                        
+                        // 添加样式
+                        const style = document.createElement('style');
+                        style.textContent = `
+                            .formatted-json-text {
+                                white-space: pre;
+                                font-family: monospace;
+                                font-size: 13px;
+                                line-height: 1.5;
+                                padding: 8px 12px;
+                                background: var(--card-bg, rgba(0, 0, 0, 0.02));
+                                border-radius: 4px;
+                                overflow-x: auto;
+                                cursor: text;
+                                user-select: text;
+                                -webkit-user-select: text;
+                                -moz-user-select: text;
+                                -ms-user-select: text;
+                            }
+                            @media (prefers-color-scheme: dark) {
+                                .formatted-json-text {
+                                    background: var(--card-bg-dark, rgba(255, 255, 255, 0.05));
+                                }
+                            }
+                        `;
+                        document.head.appendChild(style);
+                        
+                        valueContent.appendChild(formattedContainer);
+                    } else {
+                        valueContent.textContent = valueStr;
+                    }
+
+                    valueRow.appendChild(valueContent);
+
+                    content.appendChild(pathRow);
+                    content.appendChild(valueRow);
+
+                    popup.appendChild(header);
+                    popup.appendChild(content);
+
+                    // 获取点击位置和窗口尺寸
+                    const rect = this.getBoundingClientRect();
+                    const windowHeight = window.innerHeight;
+                    const popupHeight = popup.offsetHeight;
+                    const windowWidth = window.innerWidth;
+                    const MARGIN = 20; // 边距
+
+                    // 计算垂直位置
+                    const spaceBelow = windowHeight - rect.bottom;
+                    const spaceAbove = rect.top;
+
+                    // 决定弹窗显示在上方还是下方
+                    if (spaceBelow < popupHeight && spaceAbove > spaceBelow) {
+                        // 如果下方空间不足且上方空间较大，显示在上方
+                        popup.style.top = `${Math.max(MARGIN, rect.top - popupHeight - 10)}px`;
+                        popup.classList.add('popup-above');
+                    } else {
+                        // 显示在下方，但确保不超出窗口底部
+                        const topPosition = Math.min(rect.bottom + 10, windowHeight - popupHeight - MARGIN);
+                        popup.style.top = `${topPosition}px`;
+                        popup.classList.add('popup-below');
+                    }
+
+                    // 计算水平位置
+                    const popupWidth = popup.offsetWidth;
+                    let leftPosition = rect.left + (rect.width - popupWidth) / 2; // 默认居中对齐
+
+                    // 确保不超出左右边界
+                    leftPosition = Math.max(MARGIN, Math.min(leftPosition, windowWidth - popupWidth - MARGIN));
+                    popup.style.left = `${leftPosition}px`;
+
+                    // 显示弹窗
+                    popup.style.visibility = 'visible';
+
+                    // 在创建弹窗后添加 ESC 键监听
+                    document.addEventListener('keydown', function closePopupOnEsc(e) {
+                        if (e.key === 'Escape') {
+                            const popup = document.querySelector('.node-info-popup');
+                            if (popup) {
+                                popup.remove();
+                                // 移除监听器
+                                document.removeEventListener('keydown', closePopupOnEsc);
+                            }
+                        }
+                    });
+
+                    // 点击其他地方关闭弹窗
+                    document.addEventListener('click', function closePopup(e) {
+                        if (!popup.contains(e.target) && e.target !== row) {
+                            popup.remove();
+                            document.removeEventListener('click', closePopup);
+                            // 同时移除 ESC 键监听器
+                            document.removeEventListener('keydown', closePopupOnEsc);
+                        }
+                    });
+
+                    // 更新路径信息栏
                     const pathInfo = document.querySelector('.path-info');
                     if (pathInfo) {
-                        // 更新路径文本
                         const pathText = pathInfo.querySelector('.path-text');
                         if (pathText) {
                             pathText.textContent = `路径: ${currentPath || '根节点'}`;
-                        } else {
-                            const pathInfoLeft = pathInfo.querySelector('.path-info-left');
-                            if (pathInfoLeft) {
-                                const newPathText = document.createElement('span');
-                                newPathText.className = 'path-text';
-                                newPathText.textContent = `路径: ${currentPath || '根节点'}`;
-                                pathInfoLeft.insertBefore(newPathText, pathInfoLeft.querySelector('.toolbar-title'));
-                            }
                         }
-                        
-                        // 添加高亮效果
-                        document.querySelectorAll('.json-row.active').forEach(el => {
-                            el.classList.remove('active');
-                        });
-                        this.classList.add('active');
-                        
-                        // 添加路径更新动画
-                        pathInfo.classList.add('updated');
-                        setTimeout(() => {
-                            pathInfo.classList.remove('updated');
-                        }, 500);
                     }
                 });
                 
-                // 添加双击事件，复制节点数据
-                row.addEventListener('dblclick', function(e) {
-                    e.stopPropagation();
-                    
-                    // 获取当前节点的值
-                    let dataToCopy;
-                    if (typeof value === 'object' && value !== null) {
-                        dataToCopy = JSON.stringify(value, null, 2);
-                    } else {
-                        dataToCopy = typeof value === 'string' ? value : String(value);
-                    }
-                    
-                    // 复制到剪贴板
-                    navigator.clipboard.writeText(dataToCopy)
-                        .then(() => {
-                            // 创建复制成功提示
-                            showCopyTooltip(this, isArray ? `已复制索引 ${index} 的数据` : `已复制 "${key}" 的数据`);
-                        })
-                        .catch(err => {
-                            console.error('复制数据失败: ', err);
-                        });
-                });
                 
                 if (!isArray) {
                     const keySpan = document.createElement('span');
@@ -941,23 +1590,6 @@ function processPage() {
                         valueSpan.textContent = JSON.stringify(value);
                     }
                     
-                    // 为值添加双击复制功能
-                    valueSpan.addEventListener('dblclick', function(e) {
-                        e.stopPropagation();
-                        
-                        // 获取纯净的值（去除引号）
-                        let rawValue = typeof value === 'string' ? value : String(value);
-                        
-                        // 复制到剪贴板
-                        navigator.clipboard.writeText(rawValue)
-                            .then(() => {
-                                // 创建复制成功提示
-                                showCopyTooltip(this, `已复制值: ${rawValue.length > 30 ? rawValue.substring(0, 30) + '...' : rawValue}`);
-                            })
-                            .catch(err => {
-                                console.error('复制值失败: ', err);
-                            });
-                    });
                     
                     row.appendChild(valueSpan);
                 }
@@ -996,23 +1628,6 @@ function processPage() {
                 valueSpan.textContent = JSON.stringify(obj);
             }
             
-            // 为值添加双击复制功能
-            valueSpan.addEventListener('dblclick', function(e) {
-                e.stopPropagation();
-                
-                // 获取纯净的值（去除引号）
-                let rawValue = typeof obj === 'string' ? obj : String(obj);
-                
-                // 复制到剪贴板
-                navigator.clipboard.writeText(rawValue)
-                    .then(() => {
-                        // 创建复制成功提示
-                        showCopyTooltip(this, `已复制值: ${rawValue.length > 30 ? rawValue.substring(0, 30) + '...' : rawValue}`);
-                    })
-                    .catch(err => {
-                        console.error('复制值失败: ', err);
-                    });
-            });
             
             container.appendChild(valueSpan);
         }
@@ -1191,6 +1806,7 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
         if (request.action === "checkForJSON") {
             console.log("收到格式化请求:", request.action);
             
+            try {
             // 检查页面是否已经格式化过
             const hasToolbar = document.querySelector('.toolbar') !== null;
             const hasJsonContainer = document.querySelector('.json-container') !== null;
@@ -1221,7 +1837,6 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
             
             // 执行处理并返回结果
             console.log("开始执行processPage()");
-            try {
                 const checkFunction = processPage();
                 if (checkFunction) {
                     console.log("processPage()返回了检查函数，执行它");
@@ -1231,9 +1846,11 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
                         success: result,
                         message: result ? "格式化成功" : "格式化失败" 
                     });
-                } else {
+                }
+                
                     // 再次检查页面是否已经格式化过
-                    const nowFormatted = document.querySelector('.toolbar') !== null && document.querySelector('.json-container') !== null;
+                const nowFormatted = document.querySelector('.toolbar') !== null && 
+                                   document.querySelector('.json-container') !== null;
                     console.log("processPage()执行后，页面是否已格式化:", nowFormatted);
                     
                     if (nowFormatted) {
@@ -1243,12 +1860,12 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
                             message: "页面已格式化(processPage后检查)" 
                         });
                     }
+                
                     console.log("格式化失败");
                     return Promise.resolve({ 
                         success: false,
                         message: "格式化失败，页面可能不包含有效JSON" 
                     });
-                }
             } catch (processError) {
                 console.error("处理页面时出错:", processError);
                 return Promise.resolve({ 
@@ -1293,42 +1910,7 @@ function createPathInfo() {
     title.textContent = 'JSON格式化工具';
     pathLeft.appendChild(title);
     
-    // 路径文本容器 - 包含路径文本和复制按钮
-    const pathTextContainer = document.createElement('div');
-    pathTextContainer.className = 'path-text-container';
-    pathTextContainer.style.display = 'flex';
-    pathTextContainer.style.alignItems = 'center';
-    pathTextContainer.style.marginRight = '15px';
     
-    // 路径文本
-    const pathText = document.createElement('span');
-    pathText.className = 'path-text';
-    pathText.textContent = '路径: data.origin_country';
-    pathTextContainer.appendChild(pathText);
-    
-    // 添加复制按钮 - 紧跟在路径文本右侧
-    const copyPathBtn = document.createElement('button');
-    copyPathBtn.className = 'copy-path-btn';
-    copyPathBtn.style.marginLeft = '8px';
-    copyPathBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>复制';
-    
-    copyPathBtn.onclick = function(e) {
-        e.stopPropagation();
-        const pathContent = pathText.textContent.replace('路径: ', '');
-        navigator.clipboard.writeText(pathContent)
-            .then(() => {
-                copyPathBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>已复制!';
-                setTimeout(() => {
-                    copyPathBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>复制';
-                }, 2000);
-            })
-            .catch(err => {
-                console.error('复制路径失败: ', err);
-            });
-    };
-    
-    pathTextContainer.appendChild(copyPathBtn);
-    pathLeft.appendChild(pathTextContainer);
     
     pathInfo.appendChild(pathLeft);
     

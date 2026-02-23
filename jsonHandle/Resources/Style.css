@@ -28,6 +28,12 @@ body {
     text-align: center;
 }
 
+.actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 body:not(.state-on, .state-off) :is(.state-on, .state-off) {
     display: none;
 }
@@ -42,4 +48,5 @@ body.state-off :is(.state-on, .state-unknown) {
 
 button {
     font-size: 1em;
+    padding: 8px 16px;
 }

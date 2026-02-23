@@ -1,22 +1,66 @@
+const MESSAGE_ACTIONS = {
+    OPEN_PREFERENCES: 'open-preferences',
+    CHECK_STATUS: 'check-status',
+    RELOAD_EXTENSION: 'reload-extension'
+};
+
+const ui = {
+    stateOn: document.querySelector('.state-on'),
+    stateOff: document.querySelector('.state-off'),
+    stateUnknown: document.querySelector('.state-unknown'),
+    openPreferences: document.querySelector('button.open-preferences'),
+    refreshStatus: document.querySelector('button.refresh-status'),
+    reloadExtension: document.querySelector('button.reload-extension')
+};
+
+function postToHost(action) {
+    if (!webkit?.messageHandlers?.controller) return;
+    webkit.messageHandlers.controller.postMessage(action);
+}
+
+function setupActions() {
+    ui.openPreferences?.addEventListener('click', () => {
+        postToHost(MESSAGE_ACTIONS.OPEN_PREFERENCES);
+    });
+
+    ui.refreshStatus?.addEventListener('click', () => {
+        postToHost(MESSAGE_ACTIONS.CHECK_STATUS);
+    });
+
+    ui.reloadExtension?.addEventListener('click', () => {
+        postToHost(MESSAGE_ACTIONS.RELOAD_EXTENSION);
+    });
+}
+
+function updateVenturaCopy() {
+    if (ui.stateOn) {
+        ui.stateOn.innerText = 'jsonHandle 已启用，可在 Safari 设置的扩展中关闭。';
+    }
+    if (ui.stateOff) {
+        ui.stateOff.innerText = 'jsonHandle 未启用，请在 Safari 设置的扩展中开启。';
+    }
+    if (ui.stateUnknown) {
+        ui.stateUnknown.innerText = '你可以在 Safari 设置的扩展中开启 jsonHandle。';
+    }
+    if (ui.openPreferences) {
+        ui.openPreferences.innerText = '退出并打开 Safari 设置…';
+    }
+}
+
 function show(enabled, useSettingsInsteadOfPreferences) {
     if (useSettingsInsteadOfPreferences) {
-        document.getElementsByClassName('state-on')[0].innerText = "jsonHandle’s extension is currently on. You can turn it off in the Extensions section of Safari Settings.";
-        document.getElementsByClassName('state-off')[0].innerText = "jsonHandle’s extension is currently off. You can turn it on in the Extensions section of Safari Settings.";
-        document.getElementsByClassName('state-unknown')[0].innerText = "You can turn on jsonHandle’s extension in the Extensions section of Safari Settings.";
-        document.getElementsByClassName('open-preferences')[0].innerText = "Quit and Open Safari Settings…";
+        updateVenturaCopy();
     }
 
-    if (typeof enabled === "boolean") {
-        document.body.classList.toggle(`state-on`, enabled);
-        document.body.classList.toggle(`state-off`, !enabled);
-    } else {
-        document.body.classList.remove(`state-on`);
-        document.body.classList.remove(`state-off`);
+    if (typeof enabled === 'boolean') {
+        document.body.classList.toggle('state-on', enabled);
+        document.body.classList.toggle('state-off', !enabled);
+        return;
     }
+
+    document.body.classList.remove('state-on');
+    document.body.classList.remove('state-off');
 }
 
-function openPreferences() {
-    webkit.messageHandlers.controller.postMessage("open-preferences");
-}
-
-document.querySelector("button.open-preferences").addEventListener("click", openPreferences);
+setupActions();
+window.show = show;

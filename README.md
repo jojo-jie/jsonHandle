@@ -18,6 +18,8 @@
 - 🎨 提供语法高亮，便于阅读
 - 📋 支持 JSON 数据的复制和下载
 - 🎯 可自定义主题和格式化选项
+- 🧭 显示当前选中节点路径与类型信息
+- 🗂 支持树视图/原始视图切换
 
 
 
@@ -46,9 +48,25 @@ git clone https://github.com/jojo-jie/jsonHandle.git
 2. 扩展会自动检测并格式化 JSON 数据
 3. 使用工具栏上的按钮进行以下操作：
    - 折叠/展开 JSON 节点
+   - 展开全部 / 折叠全部
    - 复制 JSON 数据
+   - 复制选中节点路径与值
    - 下载 JSON 文件
+   - 切换原始视图 / 树视图
    - 切换主题样式
+
+## ⌨️ 快捷键
+
+- `⌘/Ctrl + K`：打开搜索
+- `⌘/Ctrl + C`：复制当前选中节点的值
+- `Esc`：关闭搜索
+
+## ⚙️ 设置项（弹窗）
+
+- 主题：`Auto / Light / Dark`
+- 折叠阈值：数组/对象元素超过该值自动折叠
+- 最大 JSON 大小：超出后不进行渲染
+- 统计信息：显示 JSON 大小与元素数量
 
 ## 🛠️ 开发
 
@@ -67,6 +85,13 @@ cd jsonHandle
 ```
 2. 使用 Xcode 打开项目
 3. 选择目标设备并点击运行
+
+### 扩展代码结构（重构后）
+
+- `jsonHandle Extension/Resources/shared/settings.js`：弹窗与内容脚本共享的设置默认值与归一化逻辑
+- `jsonHandle Extension/Resources/content.js`：JSON 检测、渲染、搜索、交互与复制/下载
+- `jsonHandle Extension/Resources/background.js`：网络响应监听、JSON 请求候选判定与消息分发
+- `jsonHandle Extension/Resources/popup.js`：弹窗状态展示与设置写入
 
 ## 🤝 贡献指南
 

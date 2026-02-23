@@ -27,6 +27,7 @@ jsonHandle/              # Host macOS app (Swift/Cocoa)
 jsonHandle Extension/    # Safari Web Extension
   ├── SafariWebExtensionHandler.swift
   └── Resources/
+      ├── shared/settings.js # Shared settings normalization (popup + content)
       ├── content.js     # Core: JSON detection, formatting, UI rendering
       ├── background.js  # HTTP request monitoring
       ├── popup.js/html/css
